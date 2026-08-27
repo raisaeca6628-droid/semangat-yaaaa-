@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>little love game ♡</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    height:100vh;
+    overflow:hidden;
+    font-family:Arial,sans-serif;
+
+    background:
+    radial-gradient(circle at 50% 45%,#ffd8e9,transparent 35%),
+    linear-gradient(135deg,#fff1f7,#f5e7ff);
+
+    color:#d64d88;
+}
+
+
+/* =====================
+   TULISAN BERJALAN
+===================== */
+
+.marquee{
+    position:absolute;
+    top:24px;
+    left:0;
+
+    width:100%;
+    height:58px;
+
+    overflow:hidden;
+
+    display:flex;
+    align-items:center;
+
+    background:rgba(255,255,255,.55);
+
+    border-top:2px solid white;
+    border-bottom:2px solid white;
+
+    backdrop-filter:blur(8px);
+
+    z-index:20;
+}
+
+.track{
+    display:flex;
+    white-space:nowrap;
+
+    animation:move 22s linear infinite;
+}
+
+.track span{
+    font-size:18px;
+    font-weight:bold;
+    color:#df568d;
+
+    padding-right:45px;
+}
+
+@keyframes move{
+    from{
+        transform:translateX(0);
+    }
+    to{
+        transform:translateX(-50%);
+    }
+}
+
+
+/* =====================
+   CARD
+===================== */
+
+.card{
+    position:absolute;
+
+    width:88%;
+    max-width:390px;
+
+    left:50%;
+    top:52%;
+
+    transform:translate(-50%,-50%);
+
+    padding:30px 25px;
+
+    background:rgba(255,255,255,.62);
+
+    border:2px solid white;
+    border-radius:32px;
+
+    text-align:center;
+
+    backdrop-filter:blur(12px);
+
+    box-shadow:
+        0 20px 50px rgba(190,80,130,.14);
+}
+
+
+/* =====================
+   KARAKTER
+===================== */
+
+.face{
+    font-size:40px;
+
+    margin-bottom:8px;
+
+    animation:bounce 2.5s infinite;
+}
+
+@keyframes bounce{
+    50%{
+        transform:translateY(-7px);
+    }
+}
+
+
+/* =====================
+   JUDUL
+===================== */
+
+h1{
+    color:#df4d88;
+    font-size:30px;
+    margin-bottom:5px;
+}
+
+.info{
+    color:#a66f87;
+    font-size:13px;
+    margin-bottom:18px;
+}
+
+
+/* =====================
+   GAME AREA
+===================== */
+
+.game{
+    position:relative;
+
+    height:230px;
+
+    border-radius:24px;
+
+    background:
+    linear-gradient(
+        180deg,
+        #fff4f9,
+        #ffeaf3
+    );
+
+    border:2px dashed #f2b3cc;
+
+    overflow:hidden;
+}
+
+
+/* hati yang harus diklik */
+
+.target{
+    position:absolute;
+
+    font-size:30px;
+
+    cursor:pointer;
+
+    user-select:none;
+
+    animation:pop .25s ease;
+
+    filter:drop-shadow(
+        0 3px 5px #df568844
+    );
+}
+
+@keyframes pop{
+    from{
+        transform:scale(0);
+    }
+    to{
+        transform:scale(1);
+    }
+}
+
+
+/* =====================
+   SCORE
+===================== */
+
+.score{
+    margin-top:13px;
+
+    color:#d64d88;
+
+    font-weight:bold;
+}
+
+
+/* =====================
+   PESAN
+===================== */
+
+.message{
+    min-height:25px;
+
+    margin-top:8px;
+
+    font-size:12px;
+
+    color:#a66f87;
+}
+
+
+/* =====================
+   EMOJI LATAR
+===================== */
+
+.float{
+    position:absolute;
+
+    bottom:-30px;
+
+    pointer-events:none;
+
+    animation:up 7s linear forwards;
+
+    opacity:.5;
+}
+
+@keyframes up{
+    from{
+        transform:translateY(0);
+        opacity:0;
+    }
+
+    15%{
+        opacity:.6;
+    }
+
+    to{
+        transform:translateY(-110vh);
+        opacity:0;
+    }
+}
+
+
+/* =====================
+   FOOTER
+===================== */
+
+.footer{
+    position:absolute;
+
+    bottom:20px;
+
+    width:100%;
+
+    text-align:center;
+
+    font-size:10px;
+
+    color:#c589a2;
+
+    letter-spacing:2px;
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================
+     TULISAN BERJALAN
+===================== -->
+
+<div class="marquee">
+
+<div class="track">
+
+<span>
+love youuuu bistii atu💗 >< you are lovedd 🫶 >< jangan lupa senyummm 🎀 >< mwahhh 💕 >< hehehee ♡ >< 
+</span>
+
+<span>
+love youuuu bistii atu 💗 >< you are lovedd 🫶 >< jangan lupa senyummm 🎀 >< mwahhh 💕 >< hehehee ♡ ><
+</span>
+
+</div>
+
+</div>
+
+
+<!-- =====================
+     CARD GAME
+===================== -->
+
+<div class="card">
+
+<div class="face">
+    (づ｡◕‿‿◕｡)づ
+</div>
+
+<h1>
+    tangkap love-nyaa! 💗
+</h1>
+
+<div class="info">
+    klik hati sebanyak-banyaknya dalam 15 detik >< 
+</div>
+
+
+<div class="game" id="game"></div>
+
+
+<div class="score">
+    score: <span id="score">0</span>
+</div>
+
+<div class="message" id="message">
+    ayoo tangkep 😭
+</div>
+
+</div>
+
+
+<div class="footer">
+    tiny game, tiny happiness ♡
+</div>
+
+
+<script>
+
+/* =====================
+   GAME
+===================== */
+
+const game =
+document.getElementById("game");
+
+const scoreText =
+document.getElementById("score");
+
+const message =
+document.getElementById("message");
+
+let score=0;
+
+let playing=true;
+
+
+/* buat hati */
+
+function spawnHeart(){
+
+    if(!playing) return;
+
+    const heart =
+    document.createElement("div");
+
+    heart.className="target";
+
+    heart.innerText=
+        Math.random()>.5
+        ? "💗"
+        : "💖";
+
+    heart.style.left =
+        Math.random()*85+"%";
+
+    heart.style.top =
+        Math.random()*78+"%";
+
+
+    heart.onclick=()=>{
+
+        score++;
+
+        scoreText.innerText=score;
+
+        heart.remove();
+
+        messages();
+
+        spawnHeart();
+
+    };
+
+
+    game.appendChild(heart);
+
+
+    setTimeout(()=>{
+
+        if(heart.parentElement){
+            heart.remove();
+            spawnHeart();
+        }
+
+    },1300);
+
+}
+
+
+/* pesan sesuai skor */
+
+function messages(){
+
+    if(score===3){
+
+        message.innerText=
+        "cieee udah mulai jago 😭💗";
+
+    }
+
+    else if(score===5){
+
+        message.innerText=
+        "WOIII jangan diborong semua 😭";
+
+    }
+
+    else if(score===8){
+
+        message.innerText=
+        "oke kamu menang banyak love 😭🫶";
+
+    }
+
+    else if(score===10){
+
+        message.innerText=
+        "yaudah nih aku kasih bonus 💕";
+
+        for(let i=0;i<8;i++){
+            createFloat();
+        }
+
+    }
+
+    else if(score>10){
+
+        message.innerText=
+        "STOPPP 😭 hati aku habisss";
+
+    }
+
+}
+
+
+/* mulai */
+
+for(let i=0;i<3;i++){
+
+    setTimeout(
+        spawnHeart,
+        i*400
+    );
+
+}
+
+
+/* timer */
+
+setTimeout(()=>{
+
+    playing=false;
+
+    game.innerHTML="";
+
+    message.innerHTML=
+        `waktu habis 😭<br>
+        kamu berhasil nangkep <b>${score}</b> love 💗`;
+
+},15000);
+
+
+/* =====================
+   EMOJI TERBANG
+===================== */
+
+const emojis=[
+    "♡",
+    "💗",
+    "💕",
+    "✨",
+    "🎀"
+];
+
+
+function createFloat(){
+
+    const e=
+    document.createElement("div");
+
+    e.className="float";
+
+    e.innerText=
+        emojis[
+            Math.floor(
+                Math.random()*emojis.length
+            )
+        ];
+
+    e.style.left=
+        Math.random()*100+"vw";
+
+    e.style.fontSize=
+        14+Math.random()*18+"px";
+
+    e.style.animationDuration=
+        5+Math.random()*4+"s";
+
+    document.body.appendChild(e);
+
+    setTimeout(()=>{
+        e.remove();
+    },10000);
+
+}
+
+
+setInterval(createFloat,1200);
+
+</script>
+
+</body>
+</html>
